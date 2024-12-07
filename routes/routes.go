@@ -1,13 +1,17 @@
 package routes
 
 import (
-	"product-management-system/controllers"
-
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes(r *gin.Engine) {
-	r.POST("/products", controllers.CreateProduct)
-	r.GET("/products/:id", controllers.GetProductByID)
-	r.GET("/products", controllers.GetProducts)
+// RegisterRoutes sets up the API endpoints
+func RegisterRoutes(
+	r *gin.Engine,
+	createProduct gin.HandlerFunc,
+	getProductByID gin.HandlerFunc,
+	getProducts gin.HandlerFunc,
+) {
+	r.POST("/products", createProduct)
+	r.GET("/products/:id", getProductByID)
+	r.GET("/products", getProducts)
 }

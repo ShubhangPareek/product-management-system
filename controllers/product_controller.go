@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	
 	"fmt"
 	"log"
 	"net/http"
 	"product-management-system/config"
 	"product-management-system/models"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -61,21 +61,21 @@ func CreateProduct(c *gin.Context) {
 
 	// Execute the query and handle errors
 	log.Printf("Executing query: %s", query)
-log.Printf("Parameters: user_id=%d, product_name=%s, product_description=%s, product_images=%v, product_price=%f",
-	product.UserID, product.ProductName, product.ProductDescription, product.ProductImages, product.ProductPrice)
+	log.Printf("Parameters: user_id=%d, product_name=%s, product_description=%s, product_images=%v, product_price=%f",
+		product.UserID, product.ProductName, product.ProductDescription, product.ProductImages, product.ProductPrice)
 
-if err := config.DB.QueryRow(
-	query,
-	product.UserID,
-	product.ProductName,
-	product.ProductDescription,
-	pq.Array(product.ProductImages),
-	product.ProductPrice,
-).Scan(&product.ID); err != nil {
-	log.Printf("Error inserting product: %v", err)
-	c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to insert product into database: %v", err)})
-	return
-}
+	if err := config.DB.QueryRow(
+		query,
+		product.UserID,
+		product.ProductName,
+		product.ProductDescription,
+		pq.Array(product.ProductImages),
+		product.ProductPrice,
+	).Scan(&product.ID); err != nil {
+		log.Printf("Error inserting product: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to insert product into database: %v", err)})
+		return
+	}
 
 	// Publish product images to RabbitMQ
 	imageURLs := strings.Join(product.ProductImages, ",")
@@ -134,13 +134,23 @@ func GetProducts(c *gin.Context) {
 		argID++
 	}
 	if minPrice := c.Query("min_price"); minPrice != "" {
+		minPriceValue, err := strconv.ParseFloat(minPrice, 64)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid min_price value"})
+			return
+		}
 		filters = append(filters, fmt.Sprintf("product_price >= $%d", argID))
-		args = append(args, minPrice)
+		args = append(args, minPriceValue)
 		argID++
 	}
 	if maxPrice := c.Query("max_price"); maxPrice != "" {
+		maxPriceValue, err := strconv.ParseFloat(maxPrice, 64)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid max_price value"})
+			return
+		}
 		filters = append(filters, fmt.Sprintf("product_price <= $%d", argID))
-		args = append(args, maxPrice)
+		args = append(args, maxPriceValue)
 		argID++
 	}
 

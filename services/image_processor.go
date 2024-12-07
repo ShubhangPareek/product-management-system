@@ -1,4 +1,4 @@
-package main
+package services
 
 import (
 	"log"
@@ -7,7 +7,7 @@ import (
 	"github.com/rabbitmq/amqp091-go"
 )
 
-func main() {
+func StartImageProcessor() {
 	// Connect to RabbitMQ
 	conn, err := amqp091.Dial("amqp://guest:guest@localhost:5672/")
 	if err != nil {

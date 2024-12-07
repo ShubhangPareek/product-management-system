@@ -2,6 +2,7 @@ package main
 
 import (
 	"product-management-system/config"
+	"product-management-system/controllers"
 	"product-management-system/routes"
 	"product-management-system/utils"
 
@@ -9,17 +10,24 @@ import (
 )
 
 func main() {
-	// Initialize MongoDB
+	// Initialize Database
 	config.ConnectDB()
 
 	// Initialize Logger
 	utils.InitLogger()
 	utils.Logger.Info("Logger initialized")
 
-	// Start Router
+	// Set up Gin router
 	r := gin.Default()
-	routes.RegisterRoutes(r)
-	utils.Logger.Info("Server starting on port 8080")
 
+	// Register routes with explicit controller functions
+	routes.RegisterRoutes(
+		r,
+		controllers.CreateProduct,
+		controllers.GetProductByID,
+		controllers.GetProducts,
+	)
+
+	utils.Logger.Info("Server starting on port 8080")
 	r.Run(":8080")
 }
