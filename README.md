@@ -103,13 +103,13 @@ go mod tidy
 
 1. **Start the Server**:
    ```bash
-   go run cmd/main.go
+    go run cmd/server/main.go
    ```
    Access the API at `http://localhost:8080`.
 
 2. **Start the RabbitMQ Consumer**:
    ```bash
-   go run services/image_processor.go
+   go run cmd/image_processor_main.go
    ```
 
 ---
@@ -193,8 +193,8 @@ go test ./... -cover
 ## Author
 
 - **Shubhang Pareek**
-- GitHub: [Shubhang Pareek](https://github.com/ShubhangPareek)
-- LinkedIn: [Shubhang Pareek](https://www.linkedin.com/in/shubhang-pareek-7631b0222/)
+- [GitHub](https://github.com/ShubhangPareek)
+- [LinkedIn](https://www.linkedin.com/in/shubhang-pareek-7631b0222/)
 
 ---
 
