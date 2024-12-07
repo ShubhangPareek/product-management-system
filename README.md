@@ -193,12 +193,12 @@ go test ./... -cover
 ## Author
 
 - **Your Name**
-- GitHub: [your-username](https://github.com/your-username)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)
+- GitHub: [your-username](https://github.com/ShubhangPareek)
+- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/shubhang-pareek-7631b0222/)
 
 ---
 
 ## License
 This project is licensed under the MIT License.
 
-![Uploading image.png…]()
+
