@@ -192,9 +192,9 @@ go test ./... -cover
 
 ## Author
 
-- **Your Name**
-- GitHub: [your-username](https://github.com/ShubhangPareek)
-- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/shubhang-pareek-7631b0222/)
+- **Shubhang Pareek**
+- GitHub: [Shubhang Pareek](https://github.com/ShubhangPareek)
+- LinkedIn: [Shubhang Pareek](https://www.linkedin.com/in/shubhang-pareek-7631b0222/)
 
 ---
 
